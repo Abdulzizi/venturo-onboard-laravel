@@ -19,7 +19,7 @@ class UserModel extends Model implements CrudInterface
         'password',
         'photo',
         'phone_number',
-        'm_user_roles_id', // Ensure this is correctly included for mass assignment
+        'm_user_roles_id', //foreign key
     ];
 
     public $timestamps = true;
