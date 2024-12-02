@@ -36,7 +36,8 @@ class UserHelper extends Venturo
 
         return [
             'status' => true,
-            'data' => $users
+            'data' => $users,
+            'total' => count($users),
         ];
     }
 
@@ -50,6 +51,7 @@ class UserHelper extends Venturo
     public function getById(string $id): array
     {
         $user = $this->userModel->getById($id);
+        
         if (empty($user)) {
             return [
                 'status' => false,

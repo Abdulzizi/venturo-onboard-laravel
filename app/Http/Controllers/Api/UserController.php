@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 
 use App\Helpers\User\UserHelper;
+use App\Http\Resources\User\UserResource;
 
 class UserController extends Controller
 {
@@ -25,9 +26,28 @@ class UserController extends Controller
             'nama' => $request->nama ?? '',
             'email' => $request->email ?? '',
         ];
-        $users = $this->user->getAll($filter, 5, $request->sort ?? '');
 
-        return response()->success($users['data']);
+        // Handle sorting, default to 'id DESC' if not provided or invalid
+        $sort = $request->sort ?? 'id DESC';
+
+        // Validate that sort contains a column name and direction
+        if (!preg_match('/^[a-zA-Z0-9_]+ (ASC|DESC)$/', $sort)) {
+            $sort = 'id DESC';  // Default sorting if the provided sort is invalid
+        }
+
+        // Get the pagination parameters
+        $page = $request->page ?? 1;
+        $perPage = $request->per_page ?? 25;
+
+        // Call getAll with the correct number of arguments
+        $users = $this->user->getAll($filter, $perPage, $sort);
+
+        return response()->success([
+            'list' => UserResource::collection($users['data']),
+            'meta' => [
+                'total' => $users['total']
+            ]
+        ]);
     }
 
     /**
@@ -52,7 +72,7 @@ class UserController extends Controller
             return response()->failed($user['error']);
         }
 
-        return response()->success($user['data']);
+        return response()->success(new UserResource($user['data']), 'User berhasil ditambahkan');
     }
 
     /**
@@ -62,11 +82,11 @@ class UserController extends Controller
     {
         $user = $this->user->getById($id);
 
-        if (!($user['status'])) {
+        if (empty($user)) {
             return response()->failed(['Data user tidak ditemukan'], 404);
         }
 
-        return response()->success($user['data']);
+        return response()->success(new UserResource($user['data']));
     }
 
     /**
@@ -91,7 +111,7 @@ class UserController extends Controller
             return response()->failed($user['error']);
         }
 
-        return response()->success($user['data']);
+        return response()->success(new UserResource($user['data']), 'User berhasil diubah');
     }
 
     /**
