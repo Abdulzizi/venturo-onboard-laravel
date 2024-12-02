@@ -8,11 +8,14 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('m_user', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('m_user_roles_id')->comment('Foreign key referencing the m_user_roles table');
             $table->string('name', 100)
                 ->comment('Fill with name of user');
             $table->string('email', 50)
@@ -20,22 +23,26 @@ return new class extends Migration
             $table->string('password', 255)
                 ->comment('Fill with user password');
             $table->string('phone_number', 25)
-                ->default(null)
-                ->comment('Fill with phone number of user')
-                ->nullable();
+                ->nullable()
+                ->comment('Fill with phone number of user');
             $table->string('photo', 100)
-                ->comment('Fill with user profile picture')
-                ->nullable();
+                ->nullable()
+                ->comment('Fill with user profile picture');
             $table->timestamp('updated_security')
-                ->comment('Fill with timestamp when user update password / email')
-                ->nullable();
+                ->nullable()
+                ->comment('Fill with timestamp when user updates password or email');
             $table->timestamps();
             $table->softDeletes();
             $table->uuid('created_by')->nullable();
             $table->uuid('updated_by')->nullable();
             $table->uuid('deleted_by')->nullable();
 
+            // Foreign key reference
+            $table->foreign('m_user_roles_id')->references('id')->on('m_user_roles')
+                ->onDelete('cascade');
 
+            // Indexes
+            $table->index('m_user_roles_id');
             $table->index('email');
             $table->index('name');
             $table->index('updated_security');
@@ -44,8 +51,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('m_user');
     }

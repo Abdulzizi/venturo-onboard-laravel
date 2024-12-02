@@ -8,50 +8,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserModel extends Model implements CrudInterface
+class RoleModel extends Model implements CrudInterface
 {
     use HasFactory, Uuid, SoftDeletes;
 
-    protected $table = 'm_user';
+    protected $table = 'm_user_roles';
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'photo',
-        'phone_number',
-        'm_user_roles_id', // Ensure this is correctly included for mass assignment
+        'access',
     ];
 
     public $timestamps = true;
 
-    // Set the default role ID if necessary (only when not specified)
-    protected $attributes = [
-        'm_user_roles_id' => 1, // Default role id
-    ];
-
-    // Relationship with RoleModel
-    public function role()
+    // Relationship with UserModel (one role has many users)
+    public function users()
     {
-        return $this->belongsTo(RoleModel::class, 'm_user_roles_id', 'id');
+        return $this->hasMany(UserModel::class, 'm_user_roles_id', 'id');
     }
 
     public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')
     {
-        $user = $this->query();
+        $userRoles = $this->query();
 
         if (!empty($filter['name'])) {
-            $user->where('name', 'like', '%' . $filter['name'] . '%');
-        }
-
-        if (!empty($filter['email'])) {
-            $user->where('email', 'LIKE', '%' . $filter['email'] . '%');
+            $userRoles->where('name', 'like', '%' . $filter['name'] . '%');
         }
 
         $sort = $sort ?: 'id DESC';
-        $user->orderByRaw($sort);
+        $userRoles->orderByRaw($sort);
         $itemPerPage = ($itemPerPage > 0) ? $itemPerPage : false;
 
-        return $user->paginate($itemPerPage)->appends('sort', $sort);
+        return $userRoles->paginate($itemPerPage)->appends('sort', $sort);
     }
 
     public function getById(string $id)

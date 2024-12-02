@@ -19,9 +19,9 @@ return new class extends Migration
             $table->text('access');
             $table->timestamps();
             $table->softDeletes();
-            $table->integer('created_by')->default(0);
-            $table->integer('updated_by')->default(0);
-            $table->integer('deleted_by')->default(0);
+            $table->uuid('created_by')->nullable();
+            $table->uuid('updated_by')->nullable();
+            $table->uuid('deleted_by')->nullable();
 
             $table->index('name');
         });
