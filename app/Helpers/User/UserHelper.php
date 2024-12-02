@@ -1,7 +1,11 @@
 <?php
 
+namespace App\Helpers\User;
+
 use App\Helpers\Venturo;
 use App\Models\UserModel;
+use Illuminate\Support\Facades\Hash;
+use Throwable;
 
 class UserHelper extends Venturo
 {
@@ -76,8 +80,8 @@ class UserHelper extends Venturo
         try {
             $payload['password'] = Hash::make($payload['password']);
 
-
             $payload = $this->uploadGetPayload($payload);
+            // dd($payload);
             $user = $this->userModel->store($payload);
 
             return [
@@ -114,6 +118,7 @@ class UserHelper extends Venturo
             }
 
             $payload = $this->uploadGetPayload($payload);
+            // dd($payload);
             $this->userModel->edit($payload, $id);
 
             $user = $this->getById($id);
