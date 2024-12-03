@@ -17,19 +17,6 @@ class UserHelper extends Venturo
         $this->userModel = new UserModel();
     }
 
-    /**
-     * Mengambil data user dari tabel m_user
-     *
-     * @author Wahyu Agung <wahyuagung26@gmail.com>
-     *
-     * @param  array $filter
-     * $filter['nama'] = string
-     * $filter['email'] = string
-     * @param integer $itemPerPage jumlah data yang ditampilkan, kosongi jika ingin menampilkan semua data
-     * @param string $sort nama kolom untuk melakukan sorting mysql beserta tipenya DESC / ASC
-     *
-     * @return object
-     */
     public function getAll(array $filter, int $itemPerPage = 0, string $sort = ''): array
     {
         $users = $this->userModel->getAll($filter, $itemPerPage, $sort);
@@ -37,7 +24,7 @@ class UserHelper extends Venturo
         return [
             'status' => true,
             'data' => $users,
-            'total' => count($users),
+            'total' => $users->total(),
         ];
     }
 
@@ -51,7 +38,7 @@ class UserHelper extends Venturo
     public function getById(string $id): array
     {
         $user = $this->userModel->getById($id);
-        
+
         if (empty($user)) {
             return [
                 'status' => false,

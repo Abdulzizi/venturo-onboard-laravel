@@ -26,7 +26,7 @@ class RoleModel extends Model implements CrudInterface
         return $this->hasMany(UserModel::class, 'm_user_roles_id', 'id');
     }
 
-    public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')
+    public function getAll(array $filter, int $itemPerPage = 25, string $sort = 'id DESC')
     {
         $userRoles = $this->query();
 
@@ -34,12 +34,16 @@ class RoleModel extends Model implements CrudInterface
             $userRoles->where('name', 'like', '%' . $filter['name'] . '%');
         }
 
-        $sort = $sort ?: 'id DESC';
-        $userRoles->orderByRaw($sort);
-        $itemPerPage = ($itemPerPage > 0) ? $itemPerPage : false;
+        // validasi sort format
+        if (!preg_match('/^[a-zA-Z0-9_]+ (ASC|DESC)$/', $sort)) {
+            $sort = 'id DESC';
+        }
 
-        return $userRoles->paginate($itemPerPage)->appends('sort', $sort);
+        $userRoles->orderByRaw($sort);
+
+        return $userRoles->paginate($itemPerPage)->appends(['sort' => $sort]);
     }
+
 
     public function getById(string $id)
     {

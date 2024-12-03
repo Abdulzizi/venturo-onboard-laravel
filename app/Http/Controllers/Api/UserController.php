@@ -27,15 +27,12 @@ class UserController extends Controller
             'email' => $request->email ?? '',
         ];
 
-        // Handle sorting, default to 'id DESC' if not provided or invalid
         $sort = $request->sort ?? 'id DESC';
 
-        // Validate that sort contains a column name and direction
         if (!preg_match('/^[a-zA-Z0-9_]+ (ASC|DESC)$/', $sort)) {
-            $sort = 'id DESC';  // Default sorting if the provided sort is invalid
+            $sort = 'id DESC';  // Default sorting kalau yang diinput invalid
         }
 
-        // Get the pagination parameters
         $page = $request->page ?? 1;
         $perPage = $request->per_page ?? 25;
 
@@ -82,7 +79,7 @@ class UserController extends Controller
     {
         $user = $this->user->getById($id);
 
-        if (empty($user)) {
+        if (!$user['status'] || is_null('data')) {
             return response()->failed(['Data user tidak ditemukan'], 404);
         }
 
