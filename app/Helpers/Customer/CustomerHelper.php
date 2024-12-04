@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\User;
+namespace App\Helpers\Customer;
 
 use App\Helpers\Venturo;
 use App\Models\CustomerModel;
@@ -52,10 +52,10 @@ class CustomerHelper extends Venturo
     {
         $customers = $this->customerModel->getAll($filter, $itemPerPage, $sort);
 
-
         return [
             'status' => true,
-            'data' => $customers
+            'data' => $customers,
+            'total' => $customers->total()
         ];
     }
 
@@ -68,7 +68,6 @@ class CustomerHelper extends Venturo
                 'data' => null
             ];
         }
-
 
         return [
             'status' => true,

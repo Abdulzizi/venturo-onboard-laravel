@@ -36,7 +36,6 @@ class UserController extends Controller
         $page = $request->page ?? 1;
         $perPage = $request->per_page ?? 25;
 
-        // Call getAll with the correct number of arguments
         $users = $this->user->getAll($filter, $perPage, $sort);
 
         return response()->success([
