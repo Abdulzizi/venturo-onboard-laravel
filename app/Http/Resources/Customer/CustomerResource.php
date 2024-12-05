@@ -22,15 +22,6 @@ class CustomerResource extends JsonResource
             'address' => $this->address,
             'photo_url' => $this->photo ? url('storage/' . $this->photo) : null,
             'phone' => $this->phone,
-            'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
-            'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
-            'user' => $this->whenLoaded('user', function () {
-                return [
-                    'id' => $this->user->id,
-                    'name' => $this->user->name,
-                    'email' => $this->user->email,
-                ];
-            }),
         ];
     }
 }

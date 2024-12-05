@@ -18,8 +18,6 @@ class RoleResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "access" => isset($this->access) ? json_decode($this->access, true) : [],
-            "created_at" => $this->created_at ? $this->created_at->toDateTimeString() : null,
-            "updated_at" => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
         ];
     }
 }

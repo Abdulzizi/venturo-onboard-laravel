@@ -26,13 +26,18 @@ class UserModel extends Model implements CrudInterface
 
     // Set the default role ID if necessary (only when not specified)
     protected $attributes = [
-        'm_user_roles_id' => 1, // Default role id
+        'm_user_roles_id' => "f9e49521-4a4a-4b3b-b0ca-73f36c8aef47", // Default role id
     ];
 
     // Relationship with RoleModel
     public function role()
     {
         return $this->belongsTo(RoleModel::class, 'm_user_roles_id', 'id');
+    }
+
+    public function customer()
+    {
+        return $this->hasOne(CustomerModel::class, 'm_user_id');
     }
 
     public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')

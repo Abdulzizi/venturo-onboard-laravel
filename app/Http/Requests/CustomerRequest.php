@@ -53,7 +53,6 @@ class CustomerRequest extends FormRequest
             'address' => 'nullable|string|max:255',
             'photo' => 'nullable|file|image',
             'phone' => 'nullable|numeric',
-            'm_user_id' => 'required|exists:m_user,id',
         ];
     }
 
@@ -65,11 +64,14 @@ class CustomerRequest extends FormRequest
     private function updateRules(): array
     {
         return [
+            'm_user_id' => 'required|exists:m_user,id',
+            'id' => 'required|exists:m_customers,id',
+            'email' => 'required|email',
             'name' => 'sometimes|max:100',
             'address' => 'nullable|string|max:255',
             'photo' => 'nullable|file|image',
             'phone' => 'nullable|numeric',
-            'm_user_id' => 'required|exists:m_user,id',
+            'password' => 'nullable|min:8'
         ];
     }
 
@@ -81,8 +83,6 @@ class CustomerRequest extends FormRequest
             'address.max' => 'Alamat tidak boleh lebih dari 255 karakter.',
             'photo.image' => 'Foto harus berupa gambar yang valid.',
             'phone.numeric' => 'Nomor telepon harus berupa angka.',
-            'm_user_id.required' => 'ID pengguna terkait harus diisi.',
-            'm_user_id.exists' => 'ID pengguna terkait tidak valid.',
         ];
     }
 
