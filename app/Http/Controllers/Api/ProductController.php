@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\Customer\ProductHelper;
-
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductRequest;
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
