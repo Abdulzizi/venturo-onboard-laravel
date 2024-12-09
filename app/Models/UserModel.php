@@ -19,22 +19,23 @@ class UserModel extends Model implements CrudInterface
         'password',
         'photo',
         'phone_number',
-        'm_user_roles_id', //foreign key
+        'm_user_roles_id', // foreign key
     ];
 
     public $timestamps = true;
 
-    // Set the default role ID if necessary (only when not specified)
+    // Set the default role ID (jika tidak ada input)
     protected $attributes = [
         'm_user_roles_id' => "f9e49521-4a4a-4b3b-b0ca-73f36c8aef47", // Default role id
     ];
 
-    // Relationship with RoleModel
+    // relasi one -> one ke m_user_roles
     public function role()
     {
         return $this->belongsTo(RoleModel::class, 'm_user_roles_id', 'id');
     }
 
+    // relasi one -> one ke m_customers
     public function customer()
     {
         return $this->hasOne(CustomerModel::class, 'm_user_id');

@@ -23,7 +23,6 @@ class CustomerHelper extends Venturo
             $payload = $this->uploadGetPayload($payload);
             $customer = $this->customerModel->store($payload);
 
-
             return [
                 'status' => true,
                 'data' => $customer
@@ -40,7 +39,6 @@ class CustomerHelper extends Venturo
     {
         try {
             $this->customerModel->drop($id);
-
 
             return true;
         } catch (Throwable $th) {

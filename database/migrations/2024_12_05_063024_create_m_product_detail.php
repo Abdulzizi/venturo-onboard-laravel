@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_product_detail', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
-            $table->text('m_product_id')
+            $table->string('m_product_id')
                 ->comment('Fill with id from table m_product');
             $table->enum('type', ['Level', 'Toping'])
                 ->comment('Fill with type of detail product');
@@ -25,6 +25,7 @@ return new class extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
             $table->integer('deleted_by')->default(0);

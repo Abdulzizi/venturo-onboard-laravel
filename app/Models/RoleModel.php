@@ -20,7 +20,7 @@ class RoleModel extends Model implements CrudInterface
 
     public $timestamps = true;
 
-    // Relationship with UserModel (one role has many users)
+    // relasi one -> many ke m_users
     public function users()
     {
         return $this->hasMany(UserModel::class, 'm_user_roles_id', 'id');
