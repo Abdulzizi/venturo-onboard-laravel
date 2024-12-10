@@ -17,7 +17,7 @@ class CategoryCollection extends ResourceCollection
         return [
             'list' => $this->collection,
             'meta' => [
-                'links' => $this->getUrlRange(1, $this->latPage()),
+                'links' => $this->getUrlRange(1, $this->lastPage()),
                 'total' => $this->total()
             ]
         ];

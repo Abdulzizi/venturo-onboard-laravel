@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\Uuid;
 use App\Repository\CrudInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductDetailModel extends Model implements CrudInterface
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Uuid;
 
     public $timestamps = true;
 
@@ -21,7 +22,12 @@ class ProductDetailModel extends Model implements CrudInterface
         'm_product_id'
     ];
 
-    protected $table = 'm_product_detail';
+    public function product()
+    {
+        return $this->belongsTo(ProductModel::class);
+    }
+
+    protected $table = 'm_product_details';
 
     public function drop(string $id)
     {

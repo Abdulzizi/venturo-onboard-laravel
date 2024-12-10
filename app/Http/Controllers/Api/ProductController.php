@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\Customer\ProductHelper;
+use App\Helpers\Product\ProductHelper;
 use App\Http\Requests\Product\ProductRequest;
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
@@ -97,6 +97,8 @@ class ProductController extends Controller
             'id',
             'product_category_id'
         ]);
+
+        // dd($payload);
 
         $payload['m_product_category_id'] = $payload['product_category_id'];
 

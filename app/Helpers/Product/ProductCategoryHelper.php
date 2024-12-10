@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Customer;
+namespace App\Helpers\Product;
 
 use App\Helpers\Venturo;
 use App\Models\ProductCategoryModel;

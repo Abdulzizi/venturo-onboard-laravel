@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_product', function (Blueprint $table) {
+        Schema::create('m_products', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             $table->string('m_product_category_id')

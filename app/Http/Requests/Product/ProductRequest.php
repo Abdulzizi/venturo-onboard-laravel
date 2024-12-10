@@ -52,7 +52,11 @@ class ProductRequest extends FormRequest
             'price' => 'required|numeric',
             'photo' => 'nullable|file|image',
             'is_available' => 'required|numeric|max:1',
-            'product_category_id' => 'required'
+            'product_category_id' => 'required',
+            'details.*.id' => 'nullable|exists:m_product_details,id',  // Id dari m_product_details
+            'details.*.type' => 'required',
+            'details.*.description' => 'required',
+            'details.*.price' => 'numeric',
         ];
     }
 

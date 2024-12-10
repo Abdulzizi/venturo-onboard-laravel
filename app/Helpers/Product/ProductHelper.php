@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Customer;
+namespace App\Helpers\Product;
 
 use App\Helpers\Venturo;
 use App\Models\ProductDetailModel;
@@ -46,7 +46,7 @@ class ProductHelper extends Venturo
         }
     }
 
-    public function delete(int $productId)
+    public function delete(string $productId)
     {
         try {
             $this->beginTransaction();
@@ -139,7 +139,7 @@ class ProductHelper extends Venturo
     }
 
     // Private method untuk insert / update detail product
-    private function insertUpdateDetail(array $details, int $productId)
+    private function insertUpdateDetail(array $details, string $productId)
     {
         if (empty($details)) {
             return false;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\Customer\ProductCategoryHelper;
+use App\Helpers\Product\ProductCategoryHelper;
 use App\Http\Resources\Product\CategoryCollection;
 use App\Http\Requests\Product\CategoryRequest;
 use App\Http\Resources\Product\CategoryResource;

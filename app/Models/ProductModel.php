@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\Uuid;
 use App\Repository\CrudInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductModel extends Model implements CrudInterface
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Uuid;
 
     public $timestamps = true;
 
@@ -23,22 +24,21 @@ class ProductModel extends Model implements CrudInterface
         'is_available'
     ];
 
-    protected $table = 'm_product';
+    protected $table = 'm_products';
 
     // Relasi many -> one ke m_product_category
     public function category()
     {
-        return $this->hasOne(ProductCategoryModel::class);
+        return $this->belongsTo(ProductCategoryModel::class, 'm_product_category_id');
     }
 
     // Relasi one -> many ke m_product_detail
     public function details()
     {
-        return $this->hasMany(ProductDetailModel::class);
+        return $this->hasMany(ProductDetailModel::class, 'm_product_id', 'id');
     }
 
     // CRUD interface
-
     public function drop(string $id)
     {
         return $this->find($id)->delete();
