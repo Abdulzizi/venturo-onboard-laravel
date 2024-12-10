@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Http\Traits\Uuid;
 use App\Models\ProductDetailModel;
 use App\Models\ProductModel;
+use App\Models\SaleModel;
+
 use App\Repository\CrudInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
