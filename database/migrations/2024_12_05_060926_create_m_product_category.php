@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('name', 150)
                 ->comment('Fill with name of product category');
+
             $table->timestamps();
             $table->softDeletes();
 

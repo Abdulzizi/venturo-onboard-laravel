@@ -22,6 +22,11 @@ return new class extends Migration
             $table->decimal('price', 15, 2);
 
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
+            $table->integer('deleted_by')->default(0);
 
             $table->index('id');
             $table->index('t_sales_id');
