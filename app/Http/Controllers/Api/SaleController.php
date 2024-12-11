@@ -41,7 +41,7 @@ class SaleController extends Controller
         $payload = $request->only([
             'm_customer_id',
             'date',
-            'details',
+            'product_detail',
         ]);
 
         $sale = $this->saleHelper->create($payload);
@@ -74,7 +74,7 @@ class SaleController extends Controller
             'id',
             'm_customer_id',
             'date',
-            'details',
+            'product_detail',
             'details_deleted',
         ]);
 

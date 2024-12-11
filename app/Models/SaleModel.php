@@ -31,7 +31,7 @@ class SaleModel extends Model implements CrudInterface
     // Relasi one -> many ke t_sales_detail
     public function saleDetails()
     {
-        return $this->hasMany(SaleDetailModel::class, 't_sales_id', 'id');
+        return $this->hasMany(SaleDetailModel::class, 't_sales_id');
     }
 
     public function drop(string $id)

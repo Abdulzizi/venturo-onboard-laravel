@@ -32,7 +32,8 @@ class SaleRequest extends FormRequest
     {
         return [
             'm_customer_id' => 'required|uuid|exists:m_customers,id',
-            'product_detail' => 'required|array',
+            'date' => 'nullable|date',
+            'product_detail' => 'required|array|min:1',
             'product_detail.*.m_product_id' => 'required|uuid|exists:m_products,id',
             'product_detail.*.m_product_detail_id' => 'required|uuid|exists:m_product_details,id',
             'product_detail.*.total_item' => 'required|integer|min:1',
@@ -44,8 +45,9 @@ class SaleRequest extends FormRequest
     {
         return [
             'id' => 'required|uuid|exists:t_sales,id', // sale ID should be UUID and exist
+            'date' => 'nullable|date',
             'm_customer_id' => 'required|uuid|exists:m_customers,id',
-            'product_detail' => 'required|array',
+            'product_detail' => 'required|array|min:1',
             'product_detail.*.m_product_id' => 'required|uuid|exists:m_products,id',
             'product_detail.*.m_product_detail_id' => 'required|uuid|exists:m_product_details,id',
             'product_detail.*.total_item' => 'required|integer|min:1',

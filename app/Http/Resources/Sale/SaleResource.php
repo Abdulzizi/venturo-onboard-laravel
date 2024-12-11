@@ -17,9 +17,9 @@ class SaleResource extends JsonResource
         return [
             'id' => $this->id,
             'm_customer_id' => $this->m_customer_id,
-            'customer_name' => isset($this->customer) ? $this->customer->name : "",
+            'customer_name' => $this->customer ? $this->customer->name : null,
             'date' => $this->date,
-            'details' => SaleDetailResource::collection($this->details),
+            'details' => SaleDetailResource::collection($this->saleDetails),
         ];
     }
 }

@@ -65,7 +65,6 @@ class SaleDetailModel extends Model implements CrudInterface
     {
         $query = $this->query();
 
-        // Filtering
         // by sale id
         if (!empty($filter['t_sales_id'])) {
             $query->where('t_sales_id', '=', $filter['t_sales_id']);

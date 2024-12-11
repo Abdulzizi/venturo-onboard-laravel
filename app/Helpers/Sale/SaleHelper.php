@@ -26,7 +26,7 @@ class SaleHelper extends Venturo
             // Create sale 
             $sale = $this->saleModel->create([
                 'm_customer_id' => $payload['m_customer_id'],
-                'date' => now(),
+                'date' => $payload['date'] ?? now(),
             ]);
 
             // Insert sale details
@@ -54,19 +54,21 @@ class SaleHelper extends Venturo
             $this->beginTransaction();
 
             // Update sale
-            $this->saleModel->find($payload['id'])->update([
+            $this->saleModel->findOrFail($payload['id'])->update([
                 'm_customer_id' => $payload['m_customer_id'],
-                'date' => now(),
+                'date' => isset($payload['date']) ? $payload['date'] : now(),
             ]);
 
             // Update sale details
             $this->updateSaleDetails($payload['product_detail'], $payload['id']);
 
+            $sale = $this->saleModel->with('customer', 'saleDetails.product')->find($payload['id']);
+
             $this->commitTransaction();
 
             return [
                 'status' => true,
-                'data' => $this->getById($payload['id']),
+                'data' => $sale
             ];
         } catch (Throwable $th) {
             $this->rollbackTransaction();
@@ -117,7 +119,7 @@ class SaleHelper extends Venturo
 
     public function getById(string $id): array
     {
-        $sale = $this->saleModel->with('details')->find($id);
+        $sale = $this->saleModel->with('saleDetails')->find($id);
 
         if (!$sale) {
             return [
@@ -149,16 +151,19 @@ class SaleHelper extends Venturo
     private function updateSaleDetails(array $details, string $saleId): void
     {
         foreach ($details as $detail) {
-            // jika ada "is_added" maka buat detail baru
+            // Add new detail if "is_added" is set
             if (isset($detail['is_added']) && $detail['is_added']) {
                 $detail['t_sales_id'] = $saleId;
                 $this->saleDetailModel->create($detail);
                 continue;
             }
 
-            // jika ada "is_updated" maka update detail
+            // Update existing detail if "is_updated" is set
             if (isset($detail['is_updated']) && $detail['is_updated']) {
-                $this->saleDetailModel->find($detail['id'])->update($detail);
+                $saleDetail = $this->saleDetailModel->find($detail['id']);
+                if ($saleDetail) {
+                    $saleDetail->update($detail);
+                }
             }
         }
     }
