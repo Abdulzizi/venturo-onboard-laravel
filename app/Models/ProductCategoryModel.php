@@ -18,7 +18,7 @@ class ProductCategoryModel extends Model implements CrudInterface
         "name",
     ];
 
-    protected $table = 'm_product_category';
+    protected $table = 'm_product_categories';
 
     public function drop(string $id)
     {

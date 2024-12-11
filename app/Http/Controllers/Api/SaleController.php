@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Sale\SaleRequest;
 use App\Http\Resources\Sale\SaleCollection;
 use App\Http\Resources\Sale\SaleResource;
+
 use Illuminate\Http\Request;
 
 class SaleController extends Controller

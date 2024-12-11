@@ -14,10 +14,10 @@ class ProductDetailSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('m_product_detail')->insert([
+        DB::table('m_product_details')->insert([
             [
-                'id' => Str::uuid()->toString(),
-                'm_product_id' => DB::table('m_product')->where('name', 'Iced Coffee')->first()->id,
+                'id' => Str::uuid(),
+                'm_product_id' => DB::table('m_products')->where('name', 'Iced Coffee')->first()->id,
                 'type' => 'Level',
                 'description' => 'Extra Ice',
                 'price' => 2000,
@@ -25,8 +25,8 @@ class ProductDetailSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => Str::uuid()->toString(),
-                'm_product_id' => DB::table('m_product')->where('name', 'Iced Coffee')->first()->id,
+                'id' => Str::uuid(),
+                'm_product_id' => DB::table('m_products')->where('name', 'Iced Coffee')->first()->id,
                 'type' => 'Toping',
                 'description' => 'Whipped Cream',
                 'price' => 5000,

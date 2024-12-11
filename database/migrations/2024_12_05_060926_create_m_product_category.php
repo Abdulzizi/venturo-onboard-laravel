@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_product_category', function (Blueprint $table) {
+        Schema::create('m_product_categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             $table->string('name', 150)
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('updated_by')->default(0);
             $table->integer('deleted_by')->default(0);
 
+            $table->index('id');
             $table->index('name');
         });
     }

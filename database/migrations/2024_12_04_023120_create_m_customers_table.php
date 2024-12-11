@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('m_customers', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->text('m_user_id');
+            $table->string('m_user_id');
             $table->string('name', 100);
             $table->text('address')->nullable();
             $table->text('photo')->nullable();
@@ -26,6 +26,9 @@ return new class extends Migration
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
             $table->integer('deleted_by')->default(0);
+
+            $table->index('name');
+            $table->index('m_user_id');
         });
     }
 

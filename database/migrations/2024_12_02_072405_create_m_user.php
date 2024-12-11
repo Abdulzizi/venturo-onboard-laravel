@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('m_user', function (Blueprint $table) {
+        Schema::create('m_users', function (Blueprint $table) {
             $table->uuid('id')->primary();
+
             $table->uuid('m_user_roles_id')->comment('Foreign key referencing the m_user_roles table');
+
             $table->string('name', 100)
                 ->comment('Fill with name of user');
             $table->string('email', 50)
@@ -31,17 +33,14 @@ return new class extends Migration
             $table->timestamp('updated_security')
                 ->nullable()
                 ->comment('Fill with timestamp when user updates password or email');
+
             $table->timestamps();
             $table->softDeletes();
+
             $table->uuid('created_by')->nullable();
             $table->uuid('updated_by')->nullable();
             $table->uuid('deleted_by')->nullable();
 
-            // Foreign key reference
-            $table->foreign('m_user_roles_id')->references('id')->on('m_user_roles')
-                ->onDelete('cascade');
-
-            // Indexes
             $table->index('m_user_roles_id');
             $table->index('email');
             $table->index('name');

@@ -22,6 +22,11 @@ return new class extends Migration
             $table->decimal('price', 15, 2);
 
             $table->timestamps();
+
+            $table->index('id');
+            $table->index('t_sales_id');
+            $table->index('m_product_id');
+            $table->index('m_product_detail_id');
         });
     }
 

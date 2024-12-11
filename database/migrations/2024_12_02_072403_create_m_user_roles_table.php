@@ -15,14 +15,17 @@ return new class extends Migration
     {
         Schema::create('m_user_roles', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->char('name', 50);
+
+            $table->string('name', 50);
             $table->text('access');
             $table->timestamps();
             $table->softDeletes();
+
             $table->uuid('created_by')->nullable();
             $table->uuid('updated_by')->nullable();
             $table->uuid('deleted_by')->nullable();
 
+            $table->index('id');
             $table->index('name');
         });
     }

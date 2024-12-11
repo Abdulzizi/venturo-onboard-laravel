@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\Api\UserController;
 
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,13 @@ Route::prefix('v1')->group(function () {
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+    // Sales endpoint
+    Route::get('/sales', [SaleController::class, 'index']);
+    Route::get('/sales/{id}', [SaleController::class, 'show']);
+    Route::post('/sales', [SaleController::class, 'store']);
+    Route::put('/sales', [SaleController::class, 'update']);
+    Route::delete('/sales/{id}', [SaleController::class, 'destroy']);
 });
 
 Route::get('/', function () {

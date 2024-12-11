@@ -17,7 +17,11 @@ return new class extends Migration
             $table->string('m_customer_id');  // referencing to customer
 
             $table->date('date');
+
             $table->timestamps();
+
+            $table->index('id');
+            $table->index('m_customer_id');
         });
     }
 

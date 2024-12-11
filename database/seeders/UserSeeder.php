@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
         ]);
 
         // Seed users with role references
-        DB::table('m_user')->insert([
+        DB::table('m_users')->insert([
             'id' => '9ad1d6ab-e234-433c-871b-73a8b7ff3a61',
             'm_user_roles_id' => 'f9e49521-4a4a-4b3b-b0ca-73f36c8aef47', // Reference to Admin role
             'name' => 'Wahyu Agung',
@@ -64,7 +64,7 @@ class UserSeeder extends Seeder
             'updated_security' => now(),
         ]);
 
-        DB::table('m_user')->insert([
+        DB::table('m_users')->insert([
             'id' => '375dfe0f-6ccf-4b78-b38f-ed17eb50d0c3',
             'm_user_roles_id' => '75d055eb-f4a4-4f47-acbd-d202b19a71fc', // Reference to Staff role
             'name' => 'Wahyu',

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('updated_by')->default(0);
             $table->integer('deleted_by')->default(0);
 
+            $table->index('id');
             $table->index('m_product_id');
         });
     }
