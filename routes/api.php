@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ReportSalesController;
 use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\Api\UserController;
 
@@ -63,6 +64,10 @@ Route::prefix('v1')->group(function () {
     Route::post('/sales', [SaleController::class, 'store']);
     Route::put('/sales', [SaleController::class, 'update']);
     Route::delete('/sales/{id}', [SaleController::class, 'destroy']);
+
+    // Report Sales endpoint
+    Route::get('/report/sales-menu', [ReportSalesController::class, 'viewSalesCategories']);
+    Route::get('/download/sales-category', [ReportSalesController::class, 'viewSalesCategories']);
 });
 
 Route::get('/', function () {
