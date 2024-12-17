@@ -60,6 +60,8 @@ Route::prefix('v1')->group(function () {
 
     // Sales endpoint
     Route::get('/sales', [SaleController::class, 'index']);
+    Route::get('/sale-customer', [SaleController::class, 'getSalesByCustomer']);
+
     Route::get('/sales/{id}', [SaleController::class, 'show']);
     Route::post('/sales', [SaleController::class, 'store']);
     Route::put('/sales', [SaleController::class, 'update']);

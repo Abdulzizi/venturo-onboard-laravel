@@ -2,9 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\SaleModel;
 use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class ReportSalesCategory implements FromView
@@ -18,6 +16,7 @@ class ReportSalesCategory implements FromView
 
     public function view(): View
     {
+        // dd($this->reports);
         return view('generate.excel.report-sales', $this->reports);
     }
 }

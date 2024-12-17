@@ -51,14 +51,23 @@ class SaleModel extends Model implements CrudInterface
 
     public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')
     {
-        $query = $this->query();
+        $query = $this->saleModel->with(['customer', 'saleDetails.product']);
 
+        // customer filter
         if (!empty($filter['m_customer_id'])) {
             $query->where('m_customer_id', '=', $filter['m_customer_id']);
         }
 
-        if (!empty($filter['date'])) {
-            $query->where('date', 'LIKE', '%' . $filter['date'] . '%');
+        // menu filter
+        if (!empty($filter['m_product_id'])) {
+            $query->whereHas('saleDetails', function ($q) use ($filter) {
+                $q->where('m_product_id', '=', $filter['m_product_id']);
+            });
+        }
+
+        // date range filter
+        if (!empty($filter['date_from']) && !empty($filter['date_to'])) {
+            $query->whereBetween('date', [$filter['date_from'], $filter['date_to']]);
         }
 
         $sort = $sort ?: 'date DESC';

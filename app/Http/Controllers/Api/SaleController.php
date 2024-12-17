@@ -23,13 +23,16 @@ class SaleController extends Controller
     {
         $filter = [
             'm_customer_id' => $request->customer_id ?? '',
+            'm_product_id' => $request->menu_id ?? '', // by menu
             'date_from' => $request->date_from ?? '',
             'date_to' => $request->date_to ?? '',
         ];
 
         $sales = $this->saleHelper->getAll($filter, $request->per_page ?? 25, $request->sort ?? '');
 
-        return response()->success(new SaleCollection($sales['data']));
+        return response()->success(new SaleCollection($sales['data']), '', [
+            'filters' => $filter
+        ]);
     }
 
     public function store(SaleRequest $request)
@@ -96,5 +99,21 @@ class SaleController extends Controller
         }
 
         return response()->success($sale, 'Sale berhasil dihapus');
+    }
+
+    public function getSalesByCustomer(Request $request)
+    {
+        $filter = [
+            'm_customer_id' => $request->customer_id ?? '',
+            'date_from' => $request->date_from ?? '',
+            'date_to' => $request->date_to ?? '',
+        ];
+
+        $sales = $this->saleHelper->getSalesByCustomer($filter);
+
+        return response()->success($sales['data'], '', [
+            'filters' => $filter,
+            'total_sales' => $sales['total_sales'],
+        ]);
     }
 }

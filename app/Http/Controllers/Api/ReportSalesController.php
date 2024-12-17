@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exports\ReportSalesCategory;
 use App\Helpers\Report\SalesCategoryHelper;
 
 use App\Http\Controllers\Controller;
@@ -30,6 +31,7 @@ class ReportSalesController extends Controller
             // dd($sales);
             return Excel::download(new ReportSalesCategory($sales), 'report-sales-category.xls');
         }
+
         return response()->success($sales['data'], '', [
             'dates'          => $sales['dates'] ?? [],
             'total_per_date' => $sales['total_per_date'] ?? [],

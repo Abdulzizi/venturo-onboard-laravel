@@ -134,6 +134,38 @@ class SaleHelper extends Venturo
         ];
     }
 
+    public function getSalesByCustomer(array $filter): array
+    {
+        $query = $this->saleModel->with(['customer', 'saleDetails.product']);
+
+        // by customer
+        if (!empty($filter['m_customer_id'])) {
+            $query->where('m_customer_id', '=', $filter['m_customer_id']);
+        }
+
+        // date range filter
+        if (!empty($filter['date_from']) && !empty($filter['date_to'])) {
+            $query->whereBetween('date', [$filter['date_from'], $filter['date_to']]);
+        }
+
+        $sales = $query->get();
+
+        $groupedSales = $sales->groupBy('customer.name')->map(function ($customerSales) {
+            return [
+                'customer_name' => $customerSales->first()->customer->name,
+                'total_sales' => $customerSales->sum('saleDetails.price'),
+                'transactions' => $customerSales,
+            ];
+        });
+
+        return [
+            'status' => true,
+            'data' => $groupedSales->values(),
+            'total_sales' => $groupedSales->sum('total_sales'),
+        ];
+    }
+
+
     // Private method
     private function insertSaleDetails(array $details, string $saleId): void
     {
