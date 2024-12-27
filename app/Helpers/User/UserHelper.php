@@ -106,7 +106,12 @@ class UserHelper extends Venturo
                 unset($payload['password']);
             }
 
+            // if (isset($payload['photo'])) {
+            //     $payload['photo'] = $this->uploadGetPayload($payload);
+            // }
+
             $payload = $this->uploadGetPayload($payload);
+
             // dd($payload);
             $this->userModel->edit($payload, $id);
 
@@ -153,9 +158,24 @@ class UserHelper extends Venturo
     private function uploadGetPayload(array $payload)
     {
         if (!empty($payload['photo'])) {
-            $fileName = $this->generateFileName($payload['photo'], 'USER_' . date('Ymdhis'));
-            $photo = $payload['photo']->storeAs(self::USER_PHOTO_DIRECTORY, $fileName, 'public');
-            $payload['photo'] = $photo;
+            if ($payload['photo'] instanceof \Illuminate\Http\UploadedFile) {
+                // Handle file upload
+                $fileName = $this->generateFileName($payload['photo'], 'USER_' . date('Ymdhis'));
+                $photoPath = $payload['photo']->storeAs(self::USER_PHOTO_DIRECTORY, $fileName, 'public');
+                $payload['photo'] = $photoPath;
+            } else {
+                // photo yang dikirim Base64-encoded, decode dan save
+                $base64Image = $payload['photo'];
+                list($type, $base64Image) = explode(';', $base64Image);
+                list(, $base64Image) = explode(',', $base64Image);
+                $decodedImage = base64_decode($base64Image);
+
+                $fileName = 'USER_' . date('Ymdhis') . '.png';
+                $photoPath = self::USER_PHOTO_DIRECTORY . '/' . $fileName;
+
+                file_put_contents(storage_path('app/public/' . $photoPath), $decodedImage);
+                $payload['photo'] = $photoPath;
+            }
         } else {
             unset($payload['photo']);
         }

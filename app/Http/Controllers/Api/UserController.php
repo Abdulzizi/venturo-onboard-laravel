@@ -92,10 +92,6 @@ class UserController extends Controller
      */
     public function update(userRequest $request)
     {
-        /**
-         * Menampilkan pesan error ketika validasi gagal
-         * pengaturan validasi bisa dilihat pada class app/Http/request/userRequest
-         */
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->failed($request->validator->errors());
         }

@@ -13,6 +13,7 @@ class UserModel extends Model implements CrudInterface
     use HasFactory, Uuid, SoftDeletes;
 
     protected $table = 'm_users';
+
     protected $fillable = [
         'name',
         'email',

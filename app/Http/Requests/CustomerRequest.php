@@ -64,7 +64,7 @@ class CustomerRequest extends FormRequest
     private function updateRules(): array
     {
         return [
-            'm_user_id' => 'required|exists:m_user,id',
+            'm_user_id' => 'required|exists:m_users,id',
             'id' => 'required|exists:m_customers,id',
             'email' => 'required|email',
             'name' => 'sometimes|max:100',

@@ -52,7 +52,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|max:100',
             'photo' => 'nullable|file|image',
-            'email' => 'required|email|unique:m_user',
+            'email' => 'required|email|unique:m_users',
             'password' => 'required|min:6',
             'phone_number' => 'numeric',
             'm_user_roles_id' => 'required',
@@ -69,10 +69,10 @@ class UserRequest extends FormRequest
         return [
             'name' => 'max:100',
             'photo' => 'nullable|file|image',
-            'email' => 'email|unique:m_user,email,' . $this->id,
+            'email' => 'email|unique:m_users,email,' . $this->input('id'),
             'password' => 'nullable|min:6',
-            'phone_number' => 'numeric',
-            'm_user_roles_id' => 'required',
+            'phone_number' => 'nullable|numeric',
+            'm_user_roles_id' => 'nullable',
         ];
     }
 
