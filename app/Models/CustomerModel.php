@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Traits\Uuid;
-use Illuminate\Foundation\Auth\User;
 
 class CustomerModel extends Model implements CrudInterface
 {
@@ -44,6 +43,8 @@ class CustomerModel extends Model implements CrudInterface
     {
         $customer = $this->query();
 
+        // $customer = $this->with("user");
+
         if (!empty($filter['name'])) {
             $customer->where('name', 'LIKE', '%' . $filter['name'] . '%');
         }
@@ -57,7 +58,7 @@ class CustomerModel extends Model implements CrudInterface
 
     public function getById(string $id)
     {
-        return $this->find($id);
+        return $this->with("user")->find($id);
     }
 
     public function store(array $payload)
@@ -67,6 +68,6 @@ class CustomerModel extends Model implements CrudInterface
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'm_user_id');
+        return $this->belongsTo(UserModel::class, 'm_user_id');
     }
 }

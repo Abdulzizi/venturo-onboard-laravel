@@ -22,6 +22,8 @@ class CustomerResource extends JsonResource
             'address' => $this->address,
             'photo_url' => $this->photo ? url('storage/' . $this->photo) : null,
             'phone' => $this->phone,
+            'email' => $this->user->email,
+            'm_user_id' => $this->m_user_id
         ];
     }
 }
