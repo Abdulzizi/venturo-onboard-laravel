@@ -24,7 +24,7 @@ class ProductCategoryController extends Controller
         $filter = [
             'name' => $request->name ?? '',
         ];
-        $categories = $this->categoryHelper->getAll($filter, $request->per_page ?? 25, $request->sort ?? '');
+        $categories = $this->categoryHelper->getAll($filter, is_numeric($request->per_page) ? (int) $request->per_page : 25, $request->sort ?? '');
 
         return response()->success(new CategoryCollection($categories['data']));
     }

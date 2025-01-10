@@ -22,13 +22,15 @@ class SaleController extends Controller
     public function index(Request $request)
     {
         $filter = [
-            'm_customer_id' => $request->customer_id ?? '',
-            'm_product_id' => $request->menu_id ?? '', // by menu
+            'm_customer_id' => !empty($request->customer_id) ? explode(",", $request->customer_id) : [], // by customer
+            'm_product_id' => !empty($request->menu_id) ? explode(",", $request->menu_id) : [], // by menu
             'date_from' => $request->date_from ?? '',
             'date_to' => $request->date_to ?? '',
         ];
 
-        $sales = $this->saleHelper->getAll($filter, $request->per_page ?? 25, $request->sort ?? '');
+        // dd($filter);
+
+        $sales = $this->saleHelper->getAll($filter, (int)($request->per_page ?? 25), $request->sort ?? '');
 
         return response()->success(new SaleCollection($sales['data']), '', [
             'filters' => $filter

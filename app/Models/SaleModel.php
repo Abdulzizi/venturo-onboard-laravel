@@ -49,33 +49,34 @@ class SaleModel extends Model implements CrudInterface
         return $this->create($payload);
     }
 
-    public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')
+    public function getAll(array $filter = [], int $itemPerPage = 0, string $sort = '')
     {
-        $query = $this->saleModel->with(['customer', 'saleDetails.product']);
+        $query = $this->newQuery();
 
-        // customer filter
         if (!empty($filter['m_customer_id'])) {
-            $query->where('m_customer_id', '=', $filter['m_customer_id']);
+            $query->whereIn('m_customer_id', $filter['m_customer_id']);
         }
 
-        // menu filter
         if (!empty($filter['m_product_id'])) {
             $query->whereHas('saleDetails', function ($q) use ($filter) {
-                $q->where('m_product_id', '=', $filter['m_product_id']);
+                $q->whereIn('m_product_id', $filter['m_product_id']);
             });
         }
 
-        // date range filter
         if (!empty($filter['date_from']) && !empty($filter['date_to'])) {
             $query->whereBetween('date', [$filter['date_from'], $filter['date_to']]);
         }
 
-        $sort = $sort ?: 'date DESC';
-        $query->orderByRaw($sort);
+        if (!empty($sort)) {
+            [$column, $direction] = explode(' ', $sort);
+            $query->orderBy($column, $direction);
+        }
 
-        $itemPerPage = ($itemPerPage > 0) ? $itemPerPage : false;
+        if ($itemPerPage > 0) {
+            return $query->paginate($itemPerPage);
+        }
 
-        return $query->paginate($itemPerPage)->appends('sort', $sort);
+        return $query->get();
     }
 
     public function getById(string $id)

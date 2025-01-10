@@ -6,7 +6,6 @@ use App\Helpers\Venturo;
 use DateInterval;
 use DatePeriod;
 use DateTime;
-use Throwable;
 
 use App\Models\SaleModel;
 

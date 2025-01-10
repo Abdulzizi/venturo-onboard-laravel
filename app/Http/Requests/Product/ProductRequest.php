@@ -30,6 +30,27 @@ class ProductRequest extends FormRequest
         return $this->updateRules();
     }
 
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Nama produk wajib diisi.',
+            'name.max' => 'Nama produk tidak boleh lebih dari 150 karakter.',
+            'price.required' => 'Harga produk wajib diisi.',
+            'price.numeric' => 'Harga produk harus berupa angka.',
+            'photo.file' => 'Foto produk harus berupa file yang valid.',
+            'photo.image' => 'Foto produk harus berupa gambar.',
+            'is_available.required' => 'Ketersediaan produk wajib diisi.',
+            'is_available.numeric' => 'Ketersediaan produk harus berupa angka.',
+            'is_available.max' => 'Nilai ketersediaan produk tidak boleh lebih dari 1.',
+            'product_category_id.required' => 'Kategori produk wajib diisi.',
+            'details.*.type.required' => 'Tipe detail wajib diisi.',
+            'details.*.description.required' => 'Deskripsi detail wajib diisi.',
+            'details.*.price.numeric' => 'Harga detail harus berupa angka.',
+            'details.*.id.exists' => 'ID detail tidak valid.',
+        ];
+    }
+
+
     private function createRules(): array
     {
         return [

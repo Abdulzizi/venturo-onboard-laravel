@@ -42,6 +42,30 @@ class UserRequest extends FormRequest
         return $this->updateRules();
     }
 
+    public function messages(): array
+    {
+        return [
+            // Common fields
+            'name.required' => 'Nama pengguna wajib diisi.',
+            'name.max' => 'Nama pengguna tidak boleh lebih dari 100 karakter.',
+            'photo.file' => 'Foto pengguna harus berupa file yang valid.',
+            'photo.image' => 'Foto pengguna harus berupa gambar.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Email harus berupa alamat email yang valid.',
+            'email.unique' => 'Email ini sudah terdaftar.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi harus memiliki minimal 6 karakter.',
+            'phone_number.numeric' => 'Nomor telepon harus berupa angka.',
+            'm_user_roles_id.required' => 'Peran pengguna wajib diisi.',
+
+            // Update specific fields
+            'password.nullable' => 'Kata sandi hanya boleh diisi jika ingin mengubahnya.',
+            'phone_number.nullable' => 'Nomor telepon bersifat opsional.',
+            'm_user_roles_id.nullable' => 'Peran pengguna bersifat opsional.',
+        ];
+    }
+
+
     /**
      * Create rules.
      *
