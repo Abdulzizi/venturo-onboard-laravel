@@ -85,15 +85,17 @@ class SaleModel extends Model implements CrudInterface
     }
 
     // Untuk get by category dan periode
-    public function getSalesByCategory($startDate, $endDate, $category = '')
+    public function getSalesByCategory($startDate, $endDate, $category = "")
     {
+
         $sales = $this->query()->with([
             'saleDetails.product' => function ($query) use ($category) {
                 if (!empty($category)) {
-                    $query->where('m_product_category_id', $category);
+                    // dd(!empty($categories));
+                    $categoryIds = explode(',', $category);
+                    $query->whereIn('m_product_category_id', $categoryIds);
                 }
             },
-            // 'saleDetails',
             'saleDetails.product.category'
         ]);
 
